@@ -24,10 +24,10 @@ class body extends StatelessWidget {
     return Center(
         child: Container(
       width: double.infinity,
-      height: 250,
+      height: double.infinity,
       margin: EdgeInsets.all(20),
       padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-      child: Text("body content"),
+      child: BodyContent(),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border.all(
@@ -36,7 +36,7 @@ class body extends StatelessWidget {
             style: BorderStyle.solid,
             strokeAlign: BorderSide.strokeAlignInside),
         color: Colors.green,
-        shape: BoxShape.circle,
+        // shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
             color: Colors.pink,
@@ -51,3 +51,99 @@ class body extends StatelessWidget {
     ));
   }
 }
+
+class BodyItem extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 50,
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: Text("abc"),
+
+      ),
+      decoration: BoxDecoration(
+         color: Colors.blue,
+          borderRadius: BorderRadius.circular(16)
+      ),
+
+
+    );
+  }
+}
+
+
+class BodyContent extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+
+      child: Column(
+        children: [
+          Row(
+            // textDirection: TextDirection.rtl,
+            // crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            // mainAxisSize: MainAxisSize.min,
+            children: [BodyItem(),BodyItem(),BodyItem(),BodyItem()],
+
+          ),
+          Container(
+            width: 400,
+            height: 400,
+            color: Colors.grey,
+            child: Stack(
+              // alignment: Alignment.center,
+              fit: StackFit.loose,
+
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  width: 200,
+                  height: 200,
+                  color: Colors.red,
+                ),
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    shape: BoxShape.circle
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: 40,
+                    height: 700,
+                    color: Colors.yellow,
+                  ),
+                ),
+                Positioned(
+                  bottom: 10,
+                  right: 10,
+                  width: 40,
+                  height: 40,
+
+                  child: Container(
+
+                    color: Colors.pink,
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+
+      )
+
+    );
+  }
+}
+
