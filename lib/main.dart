@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'counter_bloc.dart';
 
@@ -192,7 +193,22 @@ class BodyContent extends StatelessWidget {
                       color: Colors.pink,
                     ),
                   ),
+                  Positioned(
+                    bottom: 10,
+                    left: 10,
+                    width: 180,
+                    height: 180,
 
+                    child: Container(
+                      color: Colors.pink,
+                      child: Column(
+                        children: [
+                          Image.asset('assets/images/tho.jpeg', fit: BoxFit.cover, width: 150,),
+                          SvgPicture.asset('assets/images/checkin.svg')
+                        ],
+                      ) ,
+                    ),
+                  ),
                 ],
               ),
             )
