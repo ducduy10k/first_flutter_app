@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vietmap_flutter_gl/vietmap_flutter_gl.dart';
 
 import 'counter_bloc.dart';
 
@@ -24,6 +27,27 @@ class SimpleBlocObserver extends BlocObserver {
   }
 }
 
+class AppTheme {
+  static ThemeData lightTheme = ThemeData(
+    brightness: Brightness.light,
+    colorSchemeSeed: Colors.yellow,
+    useMaterial3: true,
+      textTheme: textTheme
+  );
+  static ThemeData darkTheme = ThemeData(
+      brightness: Brightness.light,
+      colorSchemeSeed: Colors.yellow,
+      useMaterial3: true,
+    textTheme: textTheme
+  );
+  static TextTheme textTheme = TextTheme(
+    bodyLarge: TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold
+    )
+  );
+}
+
 void main() {
   Bloc.observer = SimpleBlocObserver();
   runApp(MultiBlocProvider(
@@ -37,9 +61,25 @@ void main() {
     ],
     child: MaterialApp(
       title: "First app by duynd",
-      home: Page(),
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      // home: Page(),
+      routes: {
+        Routes.Home: (context) => Page(),
+        Routes.Page1: (context) => Page1(),
+      },
+      initialRoute: Routes.Home,
     ),
   ));
+}
+
+class Routes {
+  static String Home = "/";
+  static String Page1 = "/page1";
+  static String Page2 = "/page2";
+  static String Page3 = "/page3";
+  static String Page4 = "/page4";
 }
 
 class Page extends StatelessWidget {
@@ -54,7 +94,7 @@ class Page extends StatelessWidget {
         children: [
           DrawerHeader(child: Text("Header")),
           ListTile(
-            title: Text("Menu item"),
+            title: Text("Menu item", style: Theme.of(context).textTheme.bodyLarge,),
             trailing: Icon(Icons.navigate_next),
           )
         ],
@@ -87,7 +127,17 @@ class Page extends StatelessWidget {
           
         ),
         floatingActionButton: FloatingActionButton(onPressed: () {}, child: Icon(Icons.add),),
-        body: body());
+        body:   VietmapGL(
+    styleString:
+    'https://maps.vietmap.vn/api/maps/light/styles.json?apikey=YOUR_API_KEY_HERE',
+    initialCameraPosition:
+    CameraPosition(target: LatLng(10.762317, 106.654551)),
+    onMapCreated: (VietmapController controller) {
+
+    },
+    ));
+
+        // body());
   }
 }
 
@@ -312,8 +362,40 @@ class BodyContent extends StatelessWidget {
                 ],
               ),
             ),
+            OutlinedButton(onPressed: () async {
+              // var r = await  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Page1(), settings: RouteSettings(name: "/page1")));
 
+              var r = await Navigator.of(context).pushNamed(Routes.Page1);
+              // print("$r");
+            }, child: Text("Go to page 1")
+            )
           ],
         ));
+  }
+}
+
+class Page1 extends StatefulWidget {
+  const Page1({super.key});
+
+  @override
+  State<Page1> createState() => _Page1State();
+}
+
+class _Page1State extends State<Page1> {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(child: Scaffold(
+      body: OutlinedButton(onPressed: (){
+        // Navigator.of(context).push(MaterialPageRoute(builder: (context) => Page()));
+        // Navigator.of(context).pop();
+        // Navigator.of(context).pop("Result data from page 1");
+
+        /***
+         * Pop đến khi gặp đúng url giống
+         */
+        Navigator.of(context).popUntil(ModalRoute.withName(Routes.Home));
+
+      }, child: const Text("Go to home")),
+    ));
   }
 }

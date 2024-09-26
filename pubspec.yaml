@@ -39,6 +39,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  vietmap_flutter_gl: 1.3.9
+  vietmap_gl_platform_interface:
+  turf:
 
 dev_dependencies:
   flutter_test:
